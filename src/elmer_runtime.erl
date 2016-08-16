@@ -1,7 +1,8 @@
 -module(elmer_runtime).
 
 -export([
-         partial/1
+         partial/1,
+         partial/2
         ]).
 
 partial(Fun) when is_function(Fun, 0) ->
@@ -12,6 +13,9 @@ partial(Fun) when is_function(Fun, 1) ->
 
 partial(Fun) when is_function(Fun) ->
     {arity, Arity} = erlang:fun_info(Fun, arity),
+    partial(Fun, Arity).
+
+partial(Fun, Arity) when is_function(Fun) ->
     partial(Fun, Arity, []).
 
 partial(Fun, Arity, Args) when Arity > length(Args) ->

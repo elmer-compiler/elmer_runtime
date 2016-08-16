@@ -29,3 +29,10 @@ fails_applying_no_args_to_partial_two_args_fun_test() ->
     Fun = fun (A, B) -> A + B end,
     Partial = elmer_runtime:partial(Fun),
     ?assertException(error, _, Partial([])).
+
+explicit_arity_partially_applied_two_args_fun_test() ->
+    Fun = fun (A, B) -> A + B end,
+    First = elmer_runtime:partial(Fun, 2),
+    Second = First([1]),
+    Three = Second([2]),
+    ?assertEqual(3, Three).
