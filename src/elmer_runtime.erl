@@ -20,7 +20,7 @@ partial(Fun, Arity) when is_function(Fun) ->
 
 partial(Fun, Arity, Args) when Arity > length(Args) ->
     fun (MoreArgs) when length(Args) + length(MoreArgs) == Arity ->
-            apply(Fun, Args ++ MoreArgs);
+            apply(Fun, [partial(Fun, Arity)] ++ Args ++ MoreArgs);
         (MoreArgs) when length(MoreArgs) > 0 ->
             partial(Fun, Arity, Args ++ MoreArgs)
     end.
